@@ -172,10 +172,18 @@ bool isEmptyPeminjaman() {
     return banyakPeminjaman == 0;
 }
 
+/**
+ * Fungsi untuk mencari status sebuah buku apakah Dipinjam atau Tersedia
+ * @param status status sewa dari sebuah buku (0 atau 1)
+ * @return Dipinjam jika statusnya 1<br>Avail jika statusnya 0
+ */
 char *getStatusSewa(int status) {
     return (status == 1) ? "Dipinjam" : "Avail";
 }
 
+/**
+ * Untuk menampilkan semua list buku (tanpa keterangan header)
+ */
 void tampilBuku() {
 
     int i;
@@ -193,6 +201,9 @@ void tampilBuku() {
 
 }
 
+/**
+ * Untuk menampilkan semua list buku (dengan keterangan header)
+ */
 void tampilListBuku() {
 
     clrscr();
@@ -213,11 +224,18 @@ void tampilListBuku() {
     tampilBuku();
 }
 
-
+/**
+ * Fungsi untuk mencari status seorang pelanggan apakah Anggota atau Bukan Anggota
+ * @param status Status Anggota dari seorang pelanggan (0 atau 1)
+ * @return Anggota jika statusnya 1<br>Bukan anggota jika statusnya 0
+ */
 char *getStatusPelanggan(int status) {
     return status == 1 ? "Anggota" : "Bukan Anggota";
 }
 
+/**
+ * Untuk menampilkan semua list pelanggan (tanpa keterangan header)
+ */
 void tampilPelanggan() {
     int i;
     printf("==========================================================================================\n");
@@ -230,6 +248,9 @@ void tampilPelanggan() {
     printf("==========================================================================================\n");
 }
 
+/**
+ * Untuk menampilkan semua list pelanggan (dengan keterangan header)
+ */
 void tampilListPelanggan() {
 
     clrscr();
@@ -250,6 +271,9 @@ void tampilListPelanggan() {
     tampilPelanggan();
 }
 
+/**
+ * Untuk menambah pelanggan baru kedalam list
+ */
 void tambahPelanggan() {
     int panjangID;
     do {
@@ -309,7 +333,9 @@ void tambahPelanggan() {
 
 
 
-
+/**
+ * Menu untuk meminjam buku.
+ */
 void pinjamBuku() {
 
     clrscr();
@@ -353,6 +379,10 @@ void pinjamBuku() {
     } while(confirm != 'Y' && confirm != 'T');
 }
 
+/**
+ * Untuk mendapatkan jumlah buku yang dipinjam
+ * @return Mengambalikan jumlah buku yang dipinjam
+ */
 int getJumlahBukuDipinjam() {
     int i;
     int jumlahBukuDipinjam = 0;
@@ -366,6 +396,9 @@ int getJumlahBukuDipinjam() {
     return jumlahBukuDipinjam;
 }
 
+/**
+ * Menu untuk mengembalikan buku yang dipinjam pelanggan
+ */
 void kembalikanBuku() {
 
     clrscr();
@@ -424,7 +457,9 @@ void kembalikanBuku() {
 }
 
 
-
+/**
+ * Inisialisasi awal (terhadap list buku) ketika program pertama kali dijalankan
+ */
 void initBuku() {
     strcpy(listBuku[banyakBuku].id, "BK-01");
     strcpy(listBuku[banyakBuku].namaBuku, "Belajar Pemrograman JAVA");
@@ -433,6 +468,9 @@ void initBuku() {
     banyakBuku++;
 }
 
+/**
+ * Inisialisasi awal (terhadap list pelanggan) ketika program pertama kali dijalankan
+ */
 void initPelanggan() {
     strcpy(listPelanggan[banyakPelanggan].id, "PMJ-01");
     strcpy(listPelanggan[banyakPelanggan].namaPelanggan, "Hendra Maulana");
@@ -440,11 +478,17 @@ void initPelanggan() {
     banyakPelanggan++;
 }
 
+/**
+ * Inisialisasi semua komponen, ketika program pertama kali dijalankan
+ */
 void init() {
     initBuku();
     initPelanggan();
 }
 
+/**
+ * Tampil menu utama
+ */
 void menuUtama() {
 
     int pilihan;
@@ -501,6 +545,9 @@ void menuUtama() {
     } // selain itu keluar (exit) program
 }
 
+/**
+ * Halaman login admin
+ */
 void login() {
 
     char username[100];
@@ -525,6 +572,10 @@ void login() {
 
 }
 
+/**
+ * Main menu
+ * @return 0 jika program sukses<br>Selain 0 jika program ada masalah
+ */
 int main() {
 
     menuUtama();

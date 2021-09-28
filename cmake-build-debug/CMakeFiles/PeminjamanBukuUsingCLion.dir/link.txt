@@ -1,0 +1,1 @@
+C:\MinGWStudio\MinGWStudio\MinGW\bin\gcc.exe -g -Wl,@CMakeFiles\PeminjamanBukuUsingCLion.dir\objects1.rsp -o PeminjamanBukuUsingCLion.exe -Wl,--out-implib,libPeminjamanBukuUsingCLion.dll.a -Wl,--major-image-version,0,--minor-image-version,0  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

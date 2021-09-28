@@ -16,7 +16,7 @@
 Mulai pindah ke Clion
 ===========
 - Koneksikan peminjaman dengan pelanggan
-- Refactor penamaan
+- Refactor penamaan                        = DONE
 
 */
 
@@ -77,6 +77,7 @@ statusSewa
 
 /* Deklarasi Fungsi */
 void login();
+/* Akhir deklarasi fungsi */
 
 
 /* implementasi fungsi */
@@ -88,7 +89,10 @@ void enter() {
     fflush(stdin);
     getchar();
 }
+/* Akhir implementasi fungsi */
 
+
+/* Deklarasi struct */
 typedef struct {
     char id[MAX_ID];
     char namaBuku[MAX_NAMA];
@@ -112,25 +116,40 @@ typedef struct {
 } DATA_PELANGGAN;
 
 typedef struct {
+    /**
+     * "Pinjam" ketika sebuah buku dipinjam
+     * "Kembali" ketika sebuah buku dikembalikan
+     */
+    char status[MAX_NAMA];
+} STATUS_PEMINJAMAN;
+
+typedef struct {
     char idPeminjaman[MAX_ID];
     char idBuku[MAX_ID];
-    char idPeminjam[MAX_ID];
+    char idPelanggan[MAX_ID];
     int lamaPinjam;
     int totalBiaya;
+    /**
+     * statusPeminjaman[0] = "Pinjam"
+     * statusPeminjaman[1] = "Kembali
+     */
+    STATUS_PEMINJAMAN statusPeminjaman[2];
 } DATA_PEMINJAMAN;
+/* Akhir deklarasi struct */
 
 
-
-
+/* Pembuatan variabel struct */
 DATA_BUKU listBuku[MAX_STRUCT];
-int banyakBuku = 0;
-
 DATA_PELANGGAN listPelanggan[MAX_STRUCT];
-int banyakPelanggan = 0;
-
-
 DATA_PEMINJAMAN listPeminjaman[MAX_STRUCT];
+/* Akhir pembuatan variabel struct */
+
+
+/* Pembuatan variabel pendukung list struct */
+int banyakBuku = 0;
+int banyakPelanggan = 0;
 int banyakPeminjaman = 0;
+/* Akhir pembuatan variabel pendukung list struct */
 
 /**
 Untuk mengecek apakah list buku masih kosong
@@ -139,10 +158,16 @@ bool isEmptyBuku() {
     return banyakBuku == 0;
 }
 
+/**
+Untuk mengecek apakah list pelanggan masih kosong
+*/
 bool isEmptyPelanggan() {
     return banyakPelanggan == 0;
 }
 
+/**
+Untuk mengecek apakah list peminjaman masih kosong
+*/
 bool isEmptyPeminjaman() {
     return banyakPeminjaman == 0;
 }

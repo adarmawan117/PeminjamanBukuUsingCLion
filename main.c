@@ -2,7 +2,20 @@
 // Versi 4
 /**
 ===========
-- Buat fungsi gotxy, untuk mempercantik tampilan
+ - Buat fungsi gotxy, untuk mempercantik tampilan
+ - Buat fungsi untuk register
+ - Buat fungsi untuk menambah buku
+ - Buat fungsi untuk merubah buku
+ - Buat fungsi untuk menghapus buku
+
+ - Buat fungsi untuk menghapus pelanggan
+ - Buat fungsi untuk merubah pelanggan
+
+ - Simpan data buku kedalam file
+ - Simpan data pelanggan kedalam file
+ - Simpan data peminjaman kedalam file
+
+ - Modularisasi file (pisahkan fungsi tertentu kedalam file terpisah)
 
 
 
@@ -15,7 +28,7 @@
 28 - September - 2021
 Mulai pindah ke Clion
 ===========
-- Koneksikan peminjaman dengan pelanggan
+- Koneksikan peminjaman dengan pelanggan   = DONE
 - Refactor penamaan                        = DONE
 
 */
@@ -124,7 +137,10 @@ typedef struct {
 } STATUS_PEMINJAMAN;
 
 typedef struct {
-    char idPeminjaman[MAX_ID];
+    /**
+     * auto increment
+     */
+    int idPeminjaman;
     char idBuku[MAX_ID];
     char idPelanggan[MAX_ID];
     int lamaPinjam;
@@ -151,6 +167,11 @@ int banyakPelanggan = 0;
 int banyakPeminjaman = 0;
 /* Akhir pembuatan variabel pendukung list struct */
 
+/* Global Variable */
+char username[100];
+char password[100];
+/* Akhir global variabel */
+
 /**
 Untuk mengecek apakah list buku masih kosong
 */
@@ -170,6 +191,15 @@ Untuk mengecek apakah list peminjaman masih kosong
 */
 bool isEmptyPeminjaman() {
     return banyakPeminjaman == 0;
+}
+
+int getLatestIDPeminjaman() {
+    int latest = -1;
+    while(listPeminjaman[latest++].idPeminjaman != 0) {
+        // statement kosong
+    }
+
+    return latest;
 }
 
 /**
@@ -369,6 +399,23 @@ void pinjamBuku() {
         confirm = (char) toupper((char) getchar());
 
         if(confirm == 'Y') {
+            /* simpan transaksi kedalam struct*/
+            int lamaPinjam;
+            int totalBiaya;
+
+            printf("Masukan lama pinjam : ");
+            scanf("%d", &lamaPinjam);
+            totalBiaya = lamaPinjam * listBuku[pilihBuku].hargaSewa;
+
+            listPeminjaman[banyakPeminjaman].idPeminjaman = getLatestIDPeminjaman() + 1;
+            strcpy(listPeminjaman[banyakPeminjaman].idBuku, listBuku[pilihBuku].id);
+            strcpy(listPeminjaman[banyakPeminjaman].idPelanggan, username);
+            listPeminjaman[banyakPeminjaman].lamaPinjam = lamaPinjam;
+            listPeminjaman[banyakPeminjaman].totalBiaya = totalBiaya;
+            strcpy(listPeminjaman[banyakPeminjaman].statusPeminjaman[0].status, "Pinjam");
+
+            banyakPeminjaman++;
+
             printf("Selamat, anda berhasil meminjam buku %s\n", listBuku[pilihBuku].namaBuku);
             listBuku[pilihBuku].statusSewa = 1; // buku sudah dipinjam
         } else {
@@ -386,14 +433,37 @@ void pinjamBuku() {
 int getJumlahBukuDipinjam() {
     int i;
     int jumlahBukuDipinjam = 0;
-    for(i = 0; i < banyakBuku; i++) {
-        // kalau bukunya dipinjam
-        if(listBuku[i].statusSewa == 1) {
+    for(i = 0; i < banyakPeminjaman; i++) {
+        // kalau yang meminjam adalah orang yagn login, maka tambahkan jumlahBukuDipinjam
+        if(strcmp(listPeminjaman[i].idPelanggan, username) == 0) {
             jumlahBukuDipinjam++;
         }
     }
 
     return jumlahBukuDipinjam;
+}
+
+char * getNamaBuku(char idBuku[]) {
+    int i;
+    char * namaBuku = malloc(MAX_NAMA);
+    for(i = 0; i < banyakBuku; i++) {
+        if(strcmp(listBuku[i].id, idBuku) == 0) {
+            strcpy(namaBuku, listBuku[i].namaBuku);
+        }
+    }
+
+    return namaBuku;
+}
+
+int getIdxBuku(char idBuku[]) {
+    int i;
+    for(i = 0; i < banyakBuku; i++) {
+        if(strcmp(listBuku[i].id, idBuku) == 0) {
+            return i;
+        }
+    }
+
+    return -1;
 }
 
 /**
@@ -425,7 +495,21 @@ void kembalikanBuku() {
         return;
     }
 
-    tampilBuku(); // menampilkan semua buku yang ada
+    DATA_PEMINJAMAN tempPeminjaman[jumlahBukuDipinjam];
+    int idxTemp = 0;
+
+    printf("==============================================================\n");
+    printf("||%-5s||%-5s||%-10s||%-15s||%-15s||\n", "No", "ID", "ID Buku", "Lama Pinjam", "Total Biaya");
+    printf("==============================================================\n");
+    int i;
+    for(i = 0; i < banyakPeminjaman; i++) {
+        if(strcmp(listPeminjaman[i].idPelanggan, username) == 0) {
+            printf("||%-5d||%-5d||%-10s||%-15d||%-15d||\n", (i + 1), listPeminjaman[i].idPeminjaman,
+                   listPeminjaman[i].idBuku, listPeminjaman[i].lamaPinjam, listPeminjaman[i].totalBiaya);
+            tempPeminjaman[idxTemp] = listPeminjaman[i];
+        }
+    }
+    printf("==============================================================\n");
 
     // proses milih buku
     int pilihBuku;
@@ -434,22 +518,28 @@ void kembalikanBuku() {
         printf("                               ||Pilih buku yang ingin dikembalikan : ");
         scanf("%d", &pilihBuku);
 
-        pilihBuku--;
-    } while(listBuku[pilihBuku].statusSewa != 1 && (pilihBuku < 1 || pilihBuku > jumlahBukuDipinjam));
+    } while(pilihBuku < 1 || pilihBuku > jumlahBukuDipinjam);
+    pilihBuku--;
+
     printf("                               ||                                      ||\n");
     printf("                               ||======================================||\n");
 
     char confirm;
+    char namaBuku[MAX_NAMA];
+    strcpy(namaBuku, getNamaBuku(tempPeminjaman[pilihBuku].idBuku));
     do {
-        printf("\n\nIngin mengembalikan buku dengan judul %s [Y/T]?", listBuku[pilihBuku].namaBuku);
+        printf("\n\nIngin mengembalikan buku dengan judul %s [Y/T]?", namaBuku);
         fflush(stdin);
         confirm = (char) toupper((char) getchar());
 
         if(confirm == 'Y') {
-            printf("Selamat, anda berhasil mengembalikan buku %s\n", listBuku[pilihBuku].namaBuku);
-            listBuku[pilihBuku].statusSewa = 0; // buku sudah dikembalikan
-        } else {
-            printf("Anda membatalkan pengembalian buku %s\n", listBuku[pilihBuku].namaBuku);
+            int idxBuku = getIdxBuku(tempPeminjaman[pilihBuku].idBuku);
+            listBuku[idxBuku].statusSewa = 0; // buku sudah dikembalikan
+            strcpy(listPeminjaman[pilihBuku].statusPeminjaman[1].status, "Kembali");
+
+            printf("Selamat, anda berhasil mengembalikan buku %s\n", namaBuku);
+        } else if(confirm == 'T') {
+            printf("Anda membatalkan pengembalian buku %s\n", namaBuku);
         }
 
 
@@ -493,6 +583,7 @@ void menuUtama() {
 
     int pilihan;
     init();
+
     do {
         clrscr();
         printf("||======================================||\n");
@@ -540,7 +631,7 @@ void menuUtama() {
         enter();
     } while(pilihan != 6 && pilihan != 7);
 
-    if(pilihan == 5) {
+    if(pilihan == 6) {
         login();
     } // selain itu keluar (exit) program
 }
@@ -549,27 +640,24 @@ void menuUtama() {
  * Halaman login admin
  */
 void login() {
+    do {
+        printf("\n\nMasukan 0 pada username dan password untuk membatalkan login\n\n");
 
-    char username[100];
-    char password[100];
+        printf("Masukan username : ");
+        scanf("%s", username);
 
-    printf("\n\nMasukan 0 pada username dan password untuk membatalkan login\n\n");
+        printf("Masukan password : ");
+        scanf("%s", password);
 
-    printf("Masukan username : ");
-    scanf("%s", username);
-
-    printf("Masukan password : ");
-    scanf("%s", password);
-
-    if(strcmp(username, "0") == 0 && strcmp(password, "0") == 0) {
-        exit(0);
-    } else if(strcmp(username, USERNAME) == 0 && strcmp(password, PASSWORD) == 0) {
-        printf("Selamat Datang %s\n", NAMA);
-        menuUtama();
-    } else {
-        printf("Username dan password tidak dikenali\n");
-    }
-
+        if (strcmp(username, "0") == 0 && strcmp(password, "0") == 0) {
+            exit(0);
+        } else if (strcmp(username, USERNAME) == 0 && strcmp(password, PASSWORD) == 0) {
+            printf("Selamat Datang %s\n", NAMA);
+            menuUtama();
+        } else {
+            printf("Username dan password tidak dikenali\n");
+        }
+    } while(strcmp(username, "0") == 0 && strcmp(password, "0") == 0);
 }
 
 /**

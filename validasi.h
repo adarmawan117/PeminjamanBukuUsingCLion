@@ -1,7 +1,9 @@
-//
-// Created by adarm on 10/24/2021.
-//
-
+// versi 1
+// 24 Oktober 2021
+/**
+ * Created by adarmawan117<br>
+ */
+ 
 #ifndef PEMINJAMANBUKUUSINGCLION_VALIDASI_H
 #define PEMINJAMANBUKUUSINGCLION_VALIDASI_H
 

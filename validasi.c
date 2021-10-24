@@ -1,6 +1,8 @@
-//
-// Created by adarm on 10/24/2021.
-//
+// versi 1
+// 24 Oktober 2021
+/**
+ * Created by adarmawan117<br>
+ */
 
 #include "validasi.h"
 

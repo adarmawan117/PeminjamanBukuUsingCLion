@@ -3,4 +3,4 @@ project(PeminjamanBukuUsingCLion C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(PeminjamanBukuUsingCLion main.c)
+add_executable(PeminjamanBukuUsingCLion main.c validasi.c validasi.h)

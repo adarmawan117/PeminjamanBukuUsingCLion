@@ -75,6 +75,12 @@
 		<Unit filename="H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/main.c">
 			<Option target="PeminjamanBukuUsingCLion"/>
 		</Unit>
+		<Unit filename="H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/validasi.c">
+			<Option target="PeminjamanBukuUsingCLion"/>
+		</Unit>
+		<Unit filename="H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/validasi.h">
+			<Option target="PeminjamanBukuUsingCLion"/>
+		</Unit>
 		<Unit filename="H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

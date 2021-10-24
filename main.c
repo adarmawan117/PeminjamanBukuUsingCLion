@@ -1,9 +1,24 @@
+// versi 6
+/**
+ - Buat validasi agar input int bisa sesuai
+     Caranya dengan memasukan nilai kedalam string dahulu, kemudian lakukan pengecekan tiap karakternya
+     Kalau terdapat bukan int, keluarkan error dan minta input lagi
+     <Lihat playlist ke 12>
+ */
+
+// Versi 5
+/**
+ - Buat fungsi gotxy, untuk mempercantik tampilan
+ */
+
 
 // Versi 4
 /**
+ * 14-Oktober-2021
 ===========
- - Buat fungsi gotxy, untuk mempercantik tampilan
- - Buat fungsi untuk register
+ - Buat fungsi untuk register              = DONE
+ - Validasi input register dan login
+
  - Buat fungsi untuk menambah buku
  - Buat fungsi untuk merubah buku
  - Buat fungsi untuk menghapus buku
@@ -79,10 +94,6 @@ statusSewa
 #include <ctype.h>
 #include <stdbool.h>
 
-#define USERNAME "agus"
-#define PASSWORD "agus"
-#define NAMA "Agus Darmawan"
-
 #define MAX_ID 10
 #define MAX_NAMA 40
 #define MAX_STRUCT 50
@@ -121,6 +132,8 @@ typedef struct {
 
 typedef struct {
     char id[MAX_ID];
+    char username[MAX_NAMA];
+    char password[MAX_NAMA];
     char namaPelanggan[MAX_NAMA];
     /**
      * 0 untuk bukan anggota, dan 1 merupakan anggota
@@ -637,11 +650,82 @@ void menuUtama() {
 }
 
 /**
+ * Untuk mengecek apakah username dan password sesuai
+ * @param username username login
+ * @param password password login
+ * @return true jika username ada di dalam database<br>false jika tidak ada
+ */
+bool authLogin() {
+    bool status = false;
+    int i;
+    for(i = 0; i < banyakPelanggan; i++) {
+        if((strcmp(listPelanggan[i].username, username) == 0) && (strcmp(listPelanggan[i].password, password) == 0)) {
+            status = true;
+            break;
+        }
+    }
+
+    return status;
+}
+
+char *getNamaPengguna() {
+    char *nama;
+    nama = malloc(sizeof(char) * MAX_NAMA);
+
+    int i;
+    for(i = 0; i < banyakPelanggan; i++) {
+        if(strcmp(listPelanggan[i].username, username) == 0) {
+            strcpy(nama, listPelanggan[i].namaPelanggan);
+            break;
+        }
+    }
+
+    return nama;
+}
+
+void registrasi() {
+    printf("Masukan ID       : ");
+    scanf("%s", listPelanggan[banyakPelanggan].id);
+
+    printf("Masukan nama     : ");
+    fflush(stdin);
+    scanf("%[^\n]", listPelanggan[banyakPelanggan].namaPelanggan);
+
+    printf("Masukan username : ");
+    fflush(stdin);
+    scanf("%s", listPelanggan[banyakPelanggan].username);
+
+    printf("Masukan password : ");
+    scanf("%s", listPelanggan[banyakPelanggan].password);
+
+    printf("Apakah anda ingin menjadi anggota? [Y/T] : ");
+    fflush(stdin);
+    char anggota = (char) toupper((char)getchar());
+    if(anggota == 'Y') {
+        listPelanggan[banyakPelanggan].statusPelanggan = 0;
+    } else {
+        listPelanggan[banyakPelanggan].statusPelanggan = 1;
+    }
+
+    printf("\n\nPelanggan \"%s\" Berhasil Disimpan\n", listPelanggan[banyakPelanggan].namaPelanggan);
+    banyakPelanggan++;
+    /*
+     * char id[MAX_ID];
+    char username[MAX_NAMA];
+    char password[MAX_NAMA];
+    char namaPelanggan[MAX_NAMA];
+     * 0 untuk bukan anggota, dan 1 merupakan anggota
+    int statusPelanggan;
+     */
+}
+
+/**
  * Halaman login admin
  */
 void login() {
     do {
-        printf("\n\nMasukan 0 pada username dan password untuk membatalkan login\n\n");
+        printf("\n\nMasukan 0 pada username dan password untuk membatalkan login\n");
+        printf("Masukan 1 pada username dan password untuk membatalkan register\n\n");
 
         printf("Masukan username : ");
         scanf("%s", username);
@@ -649,15 +733,17 @@ void login() {
         printf("Masukan password : ");
         scanf("%s", password);
 
-        if (strcmp(username, "0") == 0 && strcmp(password, "0") == 0) {
+        if (strcmp(username, "1") == 0 && strcmp(password, "1") == 0) {
+            registrasi();
+        } else if (strcmp(username, "0") == 0 && strcmp(password, "0") == 0) {
             exit(0);
-        } else if (strcmp(username, USERNAME) == 0 && strcmp(password, PASSWORD) == 0) {
-            printf("Selamat Datang %s\n", NAMA);
+        } else if (authLogin()) {
+            printf("Selamat Datang %s\n", getNamaPengguna());
             menuUtama();
         } else {
             printf("Username dan password tidak dikenali\n");
         }
-    } while(strcmp(username, "0") == 0 && strcmp(password, "0") == 0);
+    } while((strcmp(username, "0") != 0 && strcmp(password, "0") != 0));
 }
 
 /**
@@ -666,7 +752,7 @@ void login() {
  */
 int main() {
 
-    menuUtama();
+    login();
 
     return 0;
 }

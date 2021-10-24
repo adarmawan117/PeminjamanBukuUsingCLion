@@ -152,6 +152,30 @@ main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\PeminjamanBukuUsingCLion.dir\build.make CMakeFiles/PeminjamanBukuUsingCLion.dir/main.c.s
 .PHONY : main.c.s
 
+validasi.obj: validasi.c.obj
+.PHONY : validasi.obj
+
+# target to build an object file
+validasi.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PeminjamanBukuUsingCLion.dir\build.make CMakeFiles/PeminjamanBukuUsingCLion.dir/validasi.c.obj
+.PHONY : validasi.c.obj
+
+validasi.i: validasi.c.i
+.PHONY : validasi.i
+
+# target to preprocess a source file
+validasi.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PeminjamanBukuUsingCLion.dir\build.make CMakeFiles/PeminjamanBukuUsingCLion.dir/validasi.c.i
+.PHONY : validasi.c.i
+
+validasi.s: validasi.c.s
+.PHONY : validasi.s
+
+# target to generate assembly for a file
+validasi.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PeminjamanBukuUsingCLion.dir\build.make CMakeFiles/PeminjamanBukuUsingCLion.dir/validasi.c.s
+.PHONY : validasi.c.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -164,6 +188,9 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... validasi.obj
+	@echo ... validasi.i
+	@echo ... validasi.s
 .PHONY : help
 
 

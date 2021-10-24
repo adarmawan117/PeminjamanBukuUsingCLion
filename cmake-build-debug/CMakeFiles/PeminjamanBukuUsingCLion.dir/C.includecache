@@ -7,6 +7,18 @@
 #IncludeRegexTransform: 
 
 H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/main.c
+ctype.h
+-
+stdbool.h
+-
+validasi.h
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/validasi.h
+
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/validasi.c
+validasi.h
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/validasi.h
+
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/validasi.h
 stdio.h
 -
 stdlib.h
@@ -14,7 +26,5 @@ stdlib.h
 string.h
 -
 ctype.h
--
-stdbool.h
 -
 

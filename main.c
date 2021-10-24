@@ -17,7 +17,8 @@
  * 14-Oktober-2021
 ===========
  - Buat fungsi untuk register              = DONE
- - Validasi input register dan login
+ - Validasi input register dan login       = DONE
+ - Kalau login sebagai user biasa, maka hanya boleh melihat list buku, dan historynya saja
 
  - Buat fungsi untuk menambah buku
  - Buat fungsi untuk merubah buku
@@ -88,15 +89,17 @@ statusSewa
 */
 
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
 #include <ctype.h>
 #include <stdbool.h>
+
+#include "validasi.h"
 
 #define MAX_ID 10
 #define MAX_NAMA 40
 #define MAX_STRUCT 50
+
+#define MAX_STRING_LOGIN 100
 
 
 /* Deklarasi Fungsi */
@@ -132,8 +135,8 @@ typedef struct {
 
 typedef struct {
     char id[MAX_ID];
-    char username[MAX_NAMA];
-    char password[MAX_NAMA];
+    char username[MAX_STRING_LOGIN];
+    char password[MAX_STRING_LOGIN];
     char namaPelanggan[MAX_NAMA];
     /**
      * 0 untuk bukan anggota, dan 1 merupakan anggota
@@ -181,8 +184,8 @@ int banyakPeminjaman = 0;
 /* Akhir pembuatan variabel pendukung list struct */
 
 /* Global Variable */
-char username[100];
-char password[100];
+char username[MAX_STRING_LOGIN];
+char password[MAX_STRING_LOGIN];
 /* Akhir global variabel */
 
 /**
@@ -684,23 +687,19 @@ char *getNamaPengguna() {
 }
 
 void registrasi() {
-    printf("Masukan ID       : ");
-    scanf("%s", listPelanggan[banyakPelanggan].id);
+    strcpy(listPelanggan[banyakPelanggan].id,
+           inputStringMax("Masukan ID       : ", MAX_ID));
 
-    printf("Masukan nama     : ");
-    fflush(stdin);
-    scanf("%[^\n]", listPelanggan[banyakPelanggan].namaPelanggan);
+    strcpy(listPelanggan[banyakPelanggan].namaPelanggan,
+           inputStringMax("Masukan nama     : ", MAX_NAMA));
 
-    printf("Masukan username : ");
-    fflush(stdin);
-    scanf("%s", listPelanggan[banyakPelanggan].username);
+    strcpy(listPelanggan[banyakPelanggan].username,
+           inputStringMax("Masukan username : ", MAX_STRING_LOGIN));
 
-    printf("Masukan password : ");
-    scanf("%s", listPelanggan[banyakPelanggan].password);
+    strcpy(listPelanggan[banyakPelanggan].password,
+           inputStringMax("Masukan password : ", MAX_STRING_LOGIN));
 
-    printf("Apakah anda ingin menjadi anggota? [Y/T] : ");
-    fflush(stdin);
-    char anggota = (char) toupper((char)getchar());
+    char anggota = confirm("Apakah anda ingin menjadi anggota? [Y/T] : ");
     if(anggota == 'Y') {
         listPelanggan[banyakPelanggan].statusPelanggan = 0;
     } else {
@@ -709,14 +708,6 @@ void registrasi() {
 
     printf("\n\nPelanggan \"%s\" Berhasil Disimpan\n", listPelanggan[banyakPelanggan].namaPelanggan);
     banyakPelanggan++;
-    /*
-     * char id[MAX_ID];
-    char username[MAX_NAMA];
-    char password[MAX_NAMA];
-    char namaPelanggan[MAX_NAMA];
-     * 0 untuk bukan anggota, dan 1 merupakan anggota
-    int statusPelanggan;
-     */
 }
 
 /**
@@ -727,11 +718,9 @@ void login() {
         printf("\n\nMasukan 0 pada username dan password untuk membatalkan login\n");
         printf("Masukan 1 pada username dan password untuk membatalkan register\n\n");
 
-        printf("Masukan username : ");
-        scanf("%s", username);
+        strcpy(username, inputStringMax("Masukan username : ", MAX_STRING_LOGIN));
 
-        printf("Masukan password : ");
-        scanf("%s", password);
+        strcpy(password, inputStringMax("Masukan password : ", MAX_STRING_LOGIN));
 
         if (strcmp(username, "1") == 0 && strcmp(password, "1") == 0) {
             registrasi();

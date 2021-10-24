@@ -24,10 +24,11 @@ char *inputString(char pesan[]) {
 
 char *inputStringMax(char pesan[], int maxChar) {
 
-    char *string = malloc(sizeof(char) * maxChar);
+    char *string;
     int len;
 
     do {
+        string = malloc(sizeof(char) * maxChar);
         printf("%s", pesan);
         fflush(stdin);
         scanf("%[^\n]", string);
@@ -125,4 +126,20 @@ double inputDoubleMinMax(char pesan[], double min, double max) {
     } while(nilai < min);
 
     return nilai;
+}
+
+/**
+ * Konfirmasi
+ * @param pesan
+ * @return Y atau T
+ */
+char confirm(char pesan[]) {
+    char hasil;
+    do {
+        printf("%s", pesan);
+        fflush(stdin);
+        hasil = (char) toupper((char)getchar());
+    } while(hasil != 'Y' && hasil != 'T');
+
+    return hasil;
 }

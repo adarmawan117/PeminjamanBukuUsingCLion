@@ -12,13 +12,22 @@
  */
 
 
+// versi 4.1
+/**
+ * 28 Maret 2022
+ - Untuk menambah pelanggan, harus admin
+ - Buatkan login sebagai admin atau sebagai pelanggan
+ */
+
 // Versi 4
 /**
  * 14-Oktober-2021
 ===========
  - Buat fungsi untuk register              = DONE
  - Validasi input register dan login       = DONE
- - Kalau login sebagai user biasa, maka hanya boleh melihat list buku, dan historynya saja
+
+ *** 28 Maret 2022
+ - Kalau login sebagai user biasa, maka hanya boleh melihat list buku = DONE
 
  - Buat fungsi untuk menambah buku
  - Buat fungsi untuk merubah buku
@@ -579,6 +588,8 @@ void initBuku() {
  */
 void initPelanggan() {
     strcpy(listPelanggan[banyakPelanggan].id, "PMJ-01");
+    strcpy(listPelanggan[banyakPelanggan].username, "hendra");
+    strcpy(listPelanggan[banyakPelanggan].password, "hendra");
     strcpy(listPelanggan[banyakPelanggan].namaPelanggan, "Hendra Maulana");
     listPelanggan[banyakPelanggan].statusPelanggan = 0;
     banyakPelanggan++;
@@ -595,10 +606,10 @@ void init() {
 /**
  * Tampil menu utama
  */
-void menuUtama() {
+void menuUtamaSetelahLogin() {
 
     int pilihan;
-    init();
+//    init();
 
     do {
         clrscr();
@@ -652,6 +663,47 @@ void menuUtama() {
     } // selain itu keluar (exit) program
 }
 
+void menuUtamaGuestAccount() {
+
+    int pilihan;
+//    init();
+
+    do {
+        clrscr();
+        printf("||======================================||\n");
+        printf("||       MENU UTAMA GUEST ACCOUNT       ||\n");
+        printf("||======================================||\n");
+        printf("||                                      ||\n");
+        printf("|| 1. Tampil List Buku                  ||\n");
+        printf("|| 2. Login                             ||\n");
+        printf("|| 3. Keluar                            ||\n");
+        printf("||                                      ||\n");
+        printf("||======================================||\n");
+        printf("||                                      ||\n");
+        printf("|| Pilihan >> ");
+        scanf("%d", &pilihan);
+        printf("||                                      ||\n");
+        printf("||======================================||\n");
+
+        switch(pilihan) {
+            case 1:
+                tampilListBuku();
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                printf("Pilihan hanya dari 1 - 3 saja!\n");
+        }
+        enter();
+    } while(pilihan != 2 && pilihan != 3);
+
+    if(pilihan == 2) {
+        login();
+    } // selain itu keluar (exit) program
+}
+
 /**
  * Untuk mengecek apakah username dan password sesuai
  * @param username username login
@@ -701,8 +753,10 @@ void registrasi() {
 
     char anggota = confirm("Apakah anda ingin menjadi anggota? [Y/T] : ");
     if(anggota == 'Y') {
+        // daftar menjadi anggota
         listPelanggan[banyakPelanggan].statusPelanggan = 0;
     } else {
+        // daftar tanpa menjadi anggota
         listPelanggan[banyakPelanggan].statusPelanggan = 1;
     }
 
@@ -716,7 +770,8 @@ void registrasi() {
 void login() {
     do {
         printf("\n\nMasukan 0 pada username dan password untuk membatalkan login\n");
-        printf("Masukan 1 pada username dan password untuk membatalkan register\n\n");
+        printf("Masukan 1 pada username dan password untuk melakukan register\n\n");
+        printf("Masukan 2 pada username dan password untuk login \"Guest Account\"\n\n");
 
         strcpy(username, inputStringMax("Masukan username : ", MAX_STRING_LOGIN));
 
@@ -724,11 +779,14 @@ void login() {
 
         if (strcmp(username, "1") == 0 && strcmp(password, "1") == 0) {
             registrasi();
+        } else if (strcmp(username, "2") == 0 && strcmp(password, "2") == 0) {
+            menuUtamaGuestAccount();
         } else if (strcmp(username, "0") == 0 && strcmp(password, "0") == 0) {
             exit(0);
         } else if (authLogin()) {
             printf("Selamat Datang %s\n", getNamaPengguna());
-            menuUtama();
+
+            menuUtamaSetelahLogin();
         } else {
             printf("Username dan password tidak dikenali\n");
         }
@@ -741,6 +799,7 @@ void login() {
  */
 int main() {
 
+    init();
     login();
 
     return 0;

@@ -69,6 +69,7 @@ int inputIntMin(char pesan[], int min) {
 
     return nilai;
 }
+
 int inputIntMinMax(char pesan[], int min, int max) {
     int nilai;
 
@@ -95,6 +96,7 @@ double inputDouble(char pesan[]) {
 
     return nilai;
 }
+
 double inputDoubleMin(char pesan[], double min) {
     double nilai;
 
@@ -110,6 +112,7 @@ double inputDoubleMin(char pesan[], double min) {
 
     return nilai;
 }
+
 double inputDoubleMinMax(char pesan[], double min, double max) {
     double nilai;
 

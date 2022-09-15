@@ -23,15 +23,16 @@
 /**
  * 14-Oktober-2021
 ===========
- - Buat fungsi untuk register              = DONE
- - Validasi input register dan login       = DONE
+ - Buat fungsi untuk register.........................................s= DONE
+ - Validasi input register dan login..................................= DONE
 
  *** 28 Maret 2022
- - Kalau login sebagai user biasa, maka hanya boleh melihat list buku = DONE
+ - Kalau login sebagai user biasa, maka hanya boleh melihat list buku.= DONE
 
- - Buat fungsi untuk menambah buku
- - Buat fungsi untuk merubah buku
- - Buat fungsi untuk menghapus buku
+ *** 14 September 2022
+ - Buat fungsi untuk menambah buku....................................= DONE
+ - Buat fungsi untuk merubah buku.....................................= DONE
+ - Buat fungsi untuk menghapus buku...................................= DONE
 
  - Buat fungsi untuk menghapus pelanggan
  - Buat fungsi untuk merubah pelanggan
@@ -99,59 +100,8 @@ statusSewa
 
 
 
-#include <ctype.h>
-#include <stdbool.h>
-
-#include "validasi.h"
-
-#define MAX_ID 10
-#define MAX_NAMA 40
-#define MAX_STRUCT 50
-
-#define MAX_STRING_LOGIN 100
-
-
-/* Deklarasi Fungsi */
-void login();
-/* Akhir deklarasi fungsi */
-
-
-/* implementasi fungsi */
-void clrscr() {
-    system("cls");
-}
-
-void enter() {
-    fflush(stdin);
-    getchar();
-}
-/* Akhir implementasi fungsi */
-
-
-/* Deklarasi struct */
-typedef struct {
-    char id[MAX_ID];
-    char namaBuku[MAX_NAMA];
-    /**
-     * Lama sewa untuk satu hari
-     */
-    int hargaSewa;
-    /**
-     * 0 untuk avail, 1 untuk dipinjam
-    */
-    int statusSewa;
-} DATA_BUKU;
-
-typedef struct {
-    char id[MAX_ID];
-    char username[MAX_STRING_LOGIN];
-    char password[MAX_STRING_LOGIN];
-    char namaPelanggan[MAX_NAMA];
-    /**
-     * 0 untuk bukan anggota, dan 1 merupakan anggota
-     */
-    int statusPelanggan;
-} DATA_PELANGGAN;
+#include "view/ViewBuku.c"
+#include "view/ViewPelanggan.c"
 
 typedef struct {
     /**
@@ -180,43 +130,13 @@ typedef struct {
 
 
 /* Pembuatan variabel struct */
-DATA_BUKU listBuku[MAX_STRUCT];
-DATA_PELANGGAN listPelanggan[MAX_STRUCT];
 DATA_PEMINJAMAN listPeminjaman[MAX_STRUCT];
 /* Akhir pembuatan variabel struct */
 
 
 /* Pembuatan variabel pendukung list struct */
-int banyakBuku = 0;
-int banyakPelanggan = 0;
 int banyakPeminjaman = 0;
 /* Akhir pembuatan variabel pendukung list struct */
-
-/* Global Variable */
-char username[MAX_STRING_LOGIN];
-char password[MAX_STRING_LOGIN];
-/* Akhir global variabel */
-
-/**
-Untuk mengecek apakah list buku masih kosong
-*/
-bool isEmptyBuku() {
-    return banyakBuku == 0;
-}
-
-/**
-Untuk mengecek apakah list pelanggan masih kosong
-*/
-bool isEmptyPelanggan() {
-    return banyakPelanggan == 0;
-}
-
-/**
-Untuk mengecek apakah list peminjaman masih kosong
-*/
-bool isEmptyPeminjaman() {
-    return banyakPeminjaman == 0;
-}
 
 int getLatestIDPeminjaman() {
     int latest = -1;
@@ -226,166 +146,6 @@ int getLatestIDPeminjaman() {
 
     return latest;
 }
-
-/**
- * Fungsi untuk mencari status sebuah buku apakah Dipinjam atau Tersedia
- * @param status status sewa dari sebuah buku (0 atau 1)
- * @return Dipinjam jika statusnya 1<br>Avail jika statusnya 0
- */
-char *getStatusSewa(int status) {
-    return (status == 1) ? "Dipinjam" : "Avail";
-}
-
-/**
- * Untuk menampilkan semua list buku (tanpa keterangan header)
- */
-void tampilBuku() {
-
-    int i;
-
-    printf("========================================================================================================\n");
-    printf("||%-5s||%-10s||%-40s||%-15s||%-22s||\n", "No", "ID", "Nama", "Harga", "Status Peminjaman");
-    printf("========================================================================================================\n");
-    for(i = 0; i < banyakBuku; i++) {
-        printf("||%-5d||%-10s||%-40s||%-15d||%-22s||\n", (i+1), listBuku[i].id, listBuku[i].namaBuku, listBuku[i].hargaSewa,
-               getStatusSewa(listBuku[i].statusSewa));
-    }
-    printf("========================================================================================================\n");
-
-
-
-}
-
-/**
- * Untuk menampilkan semua list buku (dengan keterangan header)
- */
-void tampilListBuku() {
-
-    clrscr();
-    printf("\n\n\n");
-    printf("                               ||======================================||\n");
-    printf("                               ||    HALAMAN TAMPIL SEMUA LIST BUKU    ||\n");
-    printf("                               ||======================================||\n");
-
-    if(isEmptyBuku()) {
-        printf("                               ||                                      ||\n");
-        printf("                               ||          Buku masih kosong!          ||\n");
-        printf("                               ||                                      ||\n");
-        printf("                               ||======================================||\n");
-        return;
-    }
-
-    printf("\n");
-    tampilBuku();
-}
-
-/**
- * Fungsi untuk mencari status seorang pelanggan apakah Anggota atau Bukan Anggota
- * @param status Status Anggota dari seorang pelanggan (0 atau 1)
- * @return Anggota jika statusnya 1<br>Bukan anggota jika statusnya 0
- */
-char *getStatusPelanggan(int status) {
-    return status == 1 ? "Anggota" : "Bukan Anggota";
-}
-
-/**
- * Untuk menampilkan semua list pelanggan (tanpa keterangan header)
- */
-void tampilPelanggan() {
-    int i;
-    printf("==========================================================================================\n");
-    printf("||%-5s||%-10s||%-40s||%-25s||\n", "No", "ID", "Nama", "Status Anggota");
-    printf("==========================================================================================\n");
-    for(i = 0; i < banyakPelanggan; i++) {
-        printf("||%-5d||%-10s||%-40s||%-25s||\n", (i+1), listPelanggan[i].id, listPelanggan[i].namaPelanggan,
-               getStatusPelanggan(listPelanggan[i].statusPelanggan));
-    }
-    printf("==========================================================================================\n");
-}
-
-/**
- * Untuk menampilkan semua list pelanggan (dengan keterangan header)
- */
-void tampilListPelanggan() {
-
-    clrscr();
-    printf("\n\n\n");
-    printf("                        ||======================================||\n");
-    printf("                        || HALAMAN TAMPIL SEMUA LIST PELANGGAN  ||\n");
-    printf("                        ||======================================||\n");
-
-    if(isEmptyPelanggan()) {
-        printf("                        ||                                      ||\n");
-        printf("                        ||       Pelanggan masih kosong!        ||\n");
-        printf("                        ||                                      ||\n");
-        printf("                        ||======================================||\n");
-        return;
-    }
-
-    printf("\n");
-    tampilPelanggan();
-}
-
-/**
- * Untuk menambah pelanggan baru kedalam list
- */
-void tambahPelanggan() {
-    int panjangID;
-    do {
-
-        clrscr();
-        printf("\n\n\n");
-        printf("||======================================||\n");
-        printf("||       HALAMAN TAMBAH PELANGGAN       ||\n");
-        printf("||======================================||\n");
-        printf("||                                      ||\n");
-        printf("|| Masukan ID pelanggan   : ");
-        fflush(stdin);
-        scanf("%[^\n]", listPelanggan[banyakPelanggan].id);
-
-        panjangID = (int) strlen(listPelanggan[banyakPelanggan].id);
-
-        if(panjangID > MAX_ID) {
-            printf("** Panjang ID tidak boleh lebih dari %d karakter **\n", MAX_ID);
-            printf("||                                      ||\n");
-        }
-
-    } while(panjangID > MAX_ID);
-
-    int panjangNama;
-    do {
-        printf("|| Masukan nama pelanggan : ");
-        fflush(stdin);
-        scanf("%[^\n]", listPelanggan[banyakPelanggan].namaPelanggan);
-
-        panjangNama = (int) strlen(listPelanggan[banyakPelanggan].namaPelanggan);
-
-        if(panjangNama > MAX_NAMA) {
-            printf("** Panjang nama tidak boleh lebih dari %d karakter **\n", MAX_NAMA);
-            printf("||                                      ||\n");
-        }
-
-    } while(panjangNama > MAX_NAMA);
-
-    char confirm;
-    do {
-        printf("\n\nIngin menyimpan %s [Y/T] : ", listPelanggan[banyakPelanggan].namaPelanggan);
-        fflush(stdin);
-        confirm = (char) toupper((char) getchar());
-
-        if(confirm == 'Y') {
-            printf("Selamat, pelanggan \"%s\" berhasil ditambahkan\n", listPelanggan[banyakPelanggan].namaPelanggan);
-            banyakPelanggan++;
-        } else {
-            printf("Anda batal menambahkan pelanggan %s\n", listPelanggan[banyakPelanggan].namaPelanggan);
-        }
-
-
-    } while(confirm != 'Y' && confirm != 'T');
-}
-
-
-
 
 
 /**
@@ -480,17 +240,6 @@ char * getNamaBuku(char idBuku[]) {
     return namaBuku;
 }
 
-int getIdxBuku(char idBuku[]) {
-    int i;
-    for(i = 0; i < banyakBuku; i++) {
-        if(strcmp(listBuku[i].id, idBuku) == 0) {
-            return i;
-        }
-    }
-
-    return -1;
-}
-
 /**
  * Menu untuk mengembalikan buku yang dipinjam pelanggan
  */
@@ -573,29 +322,6 @@ void kembalikanBuku() {
 
 
 /**
- * Inisialisasi awal (terhadap list buku) ketika program pertama kali dijalankan
- */
-void initBuku() {
-    strcpy(listBuku[banyakBuku].id, "BK-01");
-    strcpy(listBuku[banyakBuku].namaBuku, "Belajar Pemrograman JAVA");
-    listBuku[banyakBuku].hargaSewa = 30000;
-    listBuku[banyakBuku].statusSewa = 0;
-    banyakBuku++;
-}
-
-/**
- * Inisialisasi awal (terhadap list pelanggan) ketika program pertama kali dijalankan
- */
-void initPelanggan() {
-    strcpy(listPelanggan[banyakPelanggan].id, "PMJ-01");
-    strcpy(listPelanggan[banyakPelanggan].username, "hendra");
-    strcpy(listPelanggan[banyakPelanggan].password, "hendra");
-    strcpy(listPelanggan[banyakPelanggan].namaPelanggan, "Hendra Maulana");
-    listPelanggan[banyakPelanggan].statusPelanggan = 0;
-    banyakPelanggan++;
-}
-
-/**
  * Inisialisasi semua komponen, ketika program pertama kali dijalankan
  */
 void init() {
@@ -617,7 +343,7 @@ void menuUtamaSetelahLogin() {
         printf("||              MENU UTAMA              ||\n");
         printf("||======================================||\n");
         printf("||                                      ||\n");
-        printf("|| 1. Tampil List Buku                  ||\n");
+        printf("|| 1. Manage Buku                       ||\n");
         printf("|| 2. Pinjam Buku                       ||\n");
         printf("|| 3. Kembalikan Buku                   ||\n");
         printf("|| 4. Tampil List Pelanggan             ||\n");
@@ -634,7 +360,7 @@ void menuUtamaSetelahLogin() {
 
         switch(pilihan) {
             case 1:
-                tampilListBuku();
+                manageBuku();
                 break;
             case 2:
                 pinjamBuku();
@@ -651,16 +377,14 @@ void menuUtamaSetelahLogin() {
             case 6:
                 break;
             case 7:
+                exit(0);
                 break;
             default:
                 printf("Pilihan hanya dari 1 - 7 saja!\n");
         }
         enter();
-    } while(pilihan != 6 && pilihan != 7);
+    } while(pilihan != 6);
 
-    if(pilihan == 6) {
-        login();
-    } // selain itu keluar (exit) program
 }
 
 void menuUtamaGuestAccount() {
@@ -692,76 +416,14 @@ void menuUtamaGuestAccount() {
             case 2:
                 break;
             case 3:
+                exit(0);
                 break;
             default:
                 printf("Pilihan hanya dari 1 - 3 saja!\n");
         }
         enter();
-    } while(pilihan != 2 && pilihan != 3);
+    } while(pilihan != 2);
 
-    if(pilihan == 2) {
-        login();
-    } // selain itu keluar (exit) program
-}
-
-/**
- * Untuk mengecek apakah username dan password sesuai
- * @param username username login
- * @param password password login
- * @return true jika username ada di dalam database<br>false jika tidak ada
- */
-bool authLogin() {
-    bool status = false;
-    int i;
-    for(i = 0; i < banyakPelanggan; i++) {
-        if((strcmp(listPelanggan[i].username, username) == 0) && (strcmp(listPelanggan[i].password, password) == 0)) {
-            status = true;
-            break;
-        }
-    }
-
-    return status;
-}
-
-char *getNamaPengguna() {
-    char *nama;
-    nama = malloc(sizeof(char) * MAX_NAMA);
-
-    int i;
-    for(i = 0; i < banyakPelanggan; i++) {
-        if(strcmp(listPelanggan[i].username, username) == 0) {
-            strcpy(nama, listPelanggan[i].namaPelanggan);
-            break;
-        }
-    }
-
-    return nama;
-}
-
-void registrasi() {
-    strcpy(listPelanggan[banyakPelanggan].id,
-           inputStringMax("Masukan ID       : ", MAX_ID));
-
-    strcpy(listPelanggan[banyakPelanggan].namaPelanggan,
-           inputStringMax("Masukan nama     : ", MAX_NAMA));
-
-    strcpy(listPelanggan[banyakPelanggan].username,
-           inputStringMax("Masukan username : ", MAX_STRING_LOGIN));
-
-    strcpy(listPelanggan[banyakPelanggan].password,
-           inputStringMax("Masukan password : ", MAX_STRING_LOGIN));
-
-    char anggota = confirm("Apakah anda ingin menjadi anggota? [Y/T] : ");
-    if(anggota == 'Y') {
-        // daftar menjadi anggota
-        listPelanggan[banyakPelanggan].statusPelanggan = 0;
-    } else {
-        // daftar tanpa menjadi anggota
-        listPelanggan[banyakPelanggan].statusPelanggan = 1;
-    }
-
-    printf("\n\nPelanggan \"%s\" Berhasil Disimpan\n", listPelanggan[banyakPelanggan].namaPelanggan);
-    banyakPelanggan++;
 }
 
 /**
@@ -773,10 +435,12 @@ void login() {
         printf("Masukan 1 pada username dan password untuk melakukan register\n\n");
         printf("Masukan 2 pada username dan password untuk login \"Guest Account\"\n\n");
 
-        strcpy(username, inputStringMax("Masukan username : ", MAX_STRING_LOGIN));
+//        strcpy(username, inputStringMax("Masukan username : ", MAX_STRING_LOGIN));
+//        strcpy(password, inputStringMax("Masukan password : ", MAX_STRING_LOGIN));
 
-        strcpy(password, inputStringMax("Masukan password : ", MAX_STRING_LOGIN));
 
+        strcpy(username, "hendra");
+        strcpy(password, "hendra");
         if (strcmp(username, "1") == 0 && strcmp(password, "1") == 0) {
             registrasi();
         } else if (strcmp(username, "2") == 0 && strcmp(password, "2") == 0) {

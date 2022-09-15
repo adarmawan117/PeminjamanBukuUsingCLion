@@ -25,6 +25,7 @@ double inputDoubleMin(char pesan[], double min);
 double inputDoubleMinMax(char pesan[], double min, double max);
 
 char confirm(char pesan[]);
+char confirmWithoutMessages();
 
 
 #endif //PEMINJAMANBUKUUSINGCLION_VALIDASI_H

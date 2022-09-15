@@ -146,3 +146,17 @@ char confirm(char pesan[]) {
 
     return hasil;
 }
+
+/**
+ * Konfirmasi
+ * @return Y atau T
+ */
+char confirmWithoutMessages() {
+    char hasil;
+    do {
+        fflush(stdin);
+        hasil = (char) toupper((char)getchar());
+    } while(hasil != 'Y' && hasil != 'T');
+
+    return hasil;
+}

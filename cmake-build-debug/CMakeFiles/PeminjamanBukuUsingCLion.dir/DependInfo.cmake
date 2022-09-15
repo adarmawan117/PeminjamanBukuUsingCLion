@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/main.c" "H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/cmake-build-debug/CMakeFiles/PeminjamanBukuUsingCLion.dir/main.c.obj"
+  "H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/method/conio.c" "H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/cmake-build-debug/CMakeFiles/PeminjamanBukuUsingCLion.dir/method/conio.c.obj"
   "H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/validasi.c" "H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/cmake-build-debug/CMakeFiles/PeminjamanBukuUsingCLion.dir/validasi.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")

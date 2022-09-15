@@ -7,12 +7,16 @@
 #IncludeRegexTransform: 
 
 H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/main.c
-ctype.h
+view/ViewBuku.c
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewBuku.c
+view/ViewPelanggan.c
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewPelanggan.c
+
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/method/conio.h
+stdio.h
 -
-stdbool.h
+stdlib.h
 -
-validasi.h
-H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/validasi.h
 
 H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/validasi.h
 stdio.h
@@ -23,4 +27,28 @@ string.h
 -
 ctype.h
 -
+
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewBuku.c
+ViewBuku.h
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewBuku.h
+
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewBuku.h
+stdbool.h
+-
+../validasi.h
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/validasi.h
+../method/conio.h
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/method/conio.h
+
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewPelanggan.c
+ViewPelanggan.h
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewPelanggan.h
+
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewPelanggan.h
+stdbool.h
+-
+../validasi.h
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/validasi.h
+../method/conio.h
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/method/conio.h
 

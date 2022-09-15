@@ -41,10 +41,9 @@
  - Simpan data pelanggan kedalam file
  - Simpan data peminjaman kedalam file
 
- - Modularisasi file (pisahkan fungsi tertentu kedalam file terpisah)
-
-
-
+ *** 15 September 2022
+ - Modularisasi file (pisahkan fungsi tertentu kedalam file terpisah)...= DONE
+ - Penyesuaian nama didalam program (tidak ada lagi peminjaman, penyewaan, dkk dll)....= DONE
 
 */
 
@@ -93,8 +92,8 @@ DATA BUKU
 id
 nama
 pengarang
-hargaSewa perhari
-statusSewa
+hargaPinjam perhari
+statusPinjam
 
 */
 
@@ -102,131 +101,7 @@ statusSewa
 
 #include "view/ViewBuku.c"
 #include "view/ViewPelanggan.c"
-
-typedef struct {
-    /**
-     * "Pinjam" ketika sebuah buku dipinjam
-     * "Kembali" ketika sebuah buku dikembalikan
-     */
-    char status[MAX_NAMA];
-} STATUS_PEMINJAMAN;
-
-typedef struct {
-    /**
-     * auto increment
-     */
-    int idPeminjaman;
-    char idBuku[MAX_ID];
-    char idPelanggan[MAX_ID];
-    int lamaPinjam;
-    int totalBiaya;
-    /**
-     * statusPeminjaman[0] = "Pinjam"
-     * statusPeminjaman[1] = "Kembali
-     */
-    STATUS_PEMINJAMAN statusPeminjaman[2];
-} DATA_PEMINJAMAN;
-/* Akhir deklarasi struct */
-
-
-/* Pembuatan variabel struct */
-DATA_PEMINJAMAN listPeminjaman[MAX_STRUCT];
-/* Akhir pembuatan variabel struct */
-
-
-/* Pembuatan variabel pendukung list struct */
-int banyakPeminjaman = 0;
-/* Akhir pembuatan variabel pendukung list struct */
-
-int getLatestIDPeminjaman() {
-    int latest = -1;
-    while(listPeminjaman[latest++].idPeminjaman != 0) {
-        // statement kosong
-    }
-
-    return latest;
-}
-
-
-/**
- * Menu untuk meminjam buku.
- */
-void pinjamBuku() {
-
-    clrscr();
-    printf("\n\n\n");
-    printf("                               ||======================================||\n");
-    printf("                               ||          HALAMAN PINJAM BUKU         ||\n");
-    printf("                               ||======================================||\n");
-
-    if(isEmptyBuku()) {
-        printf("                               ||                                      ||\n");
-        printf("                               ||          Buku masih kosong!          ||\n");
-        printf("                               ||                                      ||\n");
-        printf("                               ||======================================||\n");
-        return;
-    }
-
-    int pilihBuku;
-    tampilBuku();
-
-    do {
-        printf("                               || Pilih buku no : ");
-        scanf("%d", &pilihBuku);
-    } while(pilihBuku < 1 || pilihBuku > banyakBuku);
-    printf("                               ||======================================||\n");
-
-    pilihBuku--;
-    char confirm;
-    do {
-        printf("\n\nIngin meminjam buku dengan judul %s [Y/T]?", listBuku[pilihBuku].namaBuku);
-        fflush(stdin);
-        confirm = (char) toupper((char) getchar());
-
-        if(confirm == 'Y') {
-            /* simpan transaksi kedalam struct*/
-            int lamaPinjam;
-            int totalBiaya;
-
-            printf("Masukan lama pinjam : ");
-            scanf("%d", &lamaPinjam);
-            totalBiaya = lamaPinjam * listBuku[pilihBuku].hargaSewa;
-
-            listPeminjaman[banyakPeminjaman].idPeminjaman = getLatestIDPeminjaman() + 1;
-            strcpy(listPeminjaman[banyakPeminjaman].idBuku, listBuku[pilihBuku].id);
-            strcpy(listPeminjaman[banyakPeminjaman].idPelanggan, username);
-            listPeminjaman[banyakPeminjaman].lamaPinjam = lamaPinjam;
-            listPeminjaman[banyakPeminjaman].totalBiaya = totalBiaya;
-            strcpy(listPeminjaman[banyakPeminjaman].statusPeminjaman[0].status, "Pinjam");
-
-            banyakPeminjaman++;
-
-            printf("Selamat, anda berhasil meminjam buku %s\n", listBuku[pilihBuku].namaBuku);
-            listBuku[pilihBuku].statusSewa = 1; // buku sudah dipinjam
-        } else {
-            printf("Anda membatalkan peminjaman buku %s\n", listBuku[pilihBuku].namaBuku);
-        }
-
-
-    } while(confirm != 'Y' && confirm != 'T');
-}
-
-/**
- * Untuk mendapatkan jumlah buku yang dipinjam
- * @return Mengambalikan jumlah buku yang dipinjam
- */
-int getJumlahBukuDipinjam() {
-    int i;
-    int jumlahBukuDipinjam = 0;
-    for(i = 0; i < banyakPeminjaman; i++) {
-        // kalau yang meminjam adalah orang yagn login, maka tambahkan jumlahBukuDipinjam
-        if(strcmp(listPeminjaman[i].idPelanggan, username) == 0) {
-            jumlahBukuDipinjam++;
-        }
-    }
-
-    return jumlahBukuDipinjam;
-}
+#include "view/ViewPeminjaman.c"
 
 char * getNamaBuku(char idBuku[]) {
     int i;
@@ -272,18 +147,18 @@ void kembalikanBuku() {
     DATA_PEMINJAMAN tempPeminjaman[jumlahBukuDipinjam];
     int idxTemp = 0;
 
-    printf("==============================================================\n");
-    printf("||%-5s||%-5s||%-10s||%-15s||%-15s||\n", "No", "ID", "ID Buku", "Lama Pinjam", "Total Biaya");
-    printf("==============================================================\n");
+    printf("==========================================================================\n");
+    printf("||%-5s||%-5s||%-10s||%-15s||%-15s||%-10s||\n", "No", "ID", "ID Buku", "Lama Pinjam", "Total Biaya", "Status");
+    printf("==========================================================================\n");
     int i;
     for(i = 0; i < banyakPeminjaman; i++) {
         if(strcmp(listPeminjaman[i].idPelanggan, username) == 0) {
-            printf("||%-5d||%-5d||%-10s||%-15d||%-15d||\n", (i + 1), listPeminjaman[i].idPeminjaman,
-                   listPeminjaman[i].idBuku, listPeminjaman[i].lamaPinjam, listPeminjaman[i].totalBiaya);
+            printf("||%-5d||%-5d||%-10s||%-15d||%-15d||%-10s||\n", (i + 1), listPeminjaman[i].idPeminjaman,
+                   listPeminjaman[i].idBuku, listPeminjaman[i].lamaPinjam, listPeminjaman[i].totalBiaya, listPeminjaman[i].status);
             tempPeminjaman[idxTemp] = listPeminjaman[i];
         }
     }
-    printf("==============================================================\n");
+    printf("==========================================================================\n");
 
     // proses milih buku
     int pilihBuku;
@@ -292,7 +167,14 @@ void kembalikanBuku() {
         printf("                               ||Pilih buku yang ingin dikembalikan : ");
         scanf("%d", &pilihBuku);
 
-    } while(pilihBuku < 1 || pilihBuku > jumlahBukuDipinjam);
+        if(strcmp(listPeminjaman[pilihBuku-1].status, "Kembali") == 0) {
+            printf("                               ||Buku sudah dikembalikan\n");
+            printf("                               ||                                      ||\n");
+            printf("                               ||======================================||\n");
+            continue;
+        }
+
+    } while((pilihBuku < 1 || pilihBuku > jumlahBukuDipinjam) || strcmp(listPeminjaman[pilihBuku-1].status, "Kembali") == 0);
     pilihBuku--;
 
     printf("                               ||                                      ||\n");
@@ -308,8 +190,8 @@ void kembalikanBuku() {
 
         if(confirm == 'Y') {
             int idxBuku = getIdxBuku(tempPeminjaman[pilihBuku].idBuku);
-            listBuku[idxBuku].statusSewa = 0; // buku sudah dikembalikan
-            strcpy(listPeminjaman[pilihBuku].statusPeminjaman[1].status, "Kembali");
+            listBuku[idxBuku].statusPinjam = 0; // buku sudah dikembalikan
+            strcpy(listPeminjaman[pilihBuku].status, "Kembali");
 
             printf("Selamat, anda berhasil mengembalikan buku %s\n", namaBuku);
         } else if(confirm == 'T') {

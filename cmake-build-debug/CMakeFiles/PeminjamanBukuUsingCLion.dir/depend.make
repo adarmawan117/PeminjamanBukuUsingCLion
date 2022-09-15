@@ -8,7 +8,9 @@ CMakeFiles/PeminjamanBukuUsingCLion.dir/main.c.obj: \
  ../view/ViewBuku.c \
  ../view/ViewBuku.h \
  ../view/ViewPelanggan.c \
- ../view/ViewPelanggan.h
+ ../view/ViewPelanggan.h \
+ ../view/ViewPeminjaman.c \
+ ../view/ViewPeminjaman.h
 CMakeFiles/PeminjamanBukuUsingCLion.dir/method/conio.c.obj: \
  ../method/conio.c \
  ../method/conio.h

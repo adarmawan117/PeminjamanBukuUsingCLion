@@ -8,7 +8,7 @@ bool isEmptyBuku() {
     return banyakBuku == 0;
 }
 
-char *getStatusSewa(int status) {
+char *getStatusPinjam(int status) {
     return (status == 1) ? "Dipinjam" : "Avail";
 }
 
@@ -20,8 +20,8 @@ void tampilBuku() {
     printf("||%-5s||%-10s||%-40s||%-15s||%-22s||\n", "No", "ID", "Nama", "Harga", "Status Peminjaman");
     printf("========================================================================================================\n");
     for(i = 0; i < banyakBuku; i++) {
-        printf("||%-5d||%-10s||%-40s||%-15d||%-22s||\n", (i+1), listBuku[i].id, listBuku[i].namaBuku, listBuku[i].hargaSewa,
-               getStatusSewa(listBuku[i].statusSewa));
+        printf("||%-5d||%-10s||%-40s||%-15d||%-22s||\n", (i+1), listBuku[i].id, listBuku[i].namaBuku, listBuku[i].hargaPinjam,
+               getStatusPinjam(listBuku[i].statusPinjam));
     }
     printf("========================================================================================================\n");
 
@@ -53,8 +53,8 @@ void tambahBuku() {
     DATA_BUKU bukuBaru;
     strcpy(bukuBaru.id, inputStringMax("Masukan ID buku    : ", MAX_ID));
     strcpy(bukuBaru.namaBuku, inputStringMax("Masukan nama buku  : ", MAX_NAMA));
-    bukuBaru.hargaSewa = inputInt("Masukan harga sewa : ");
-    bukuBaru.statusSewa = inputInt("Masukan status sewa (0 tersedia 1 dipinjam)  : ");
+    bukuBaru.hargaPinjam = inputInt("Masukan harga pinjam : ");
+    bukuBaru.statusPinjam = inputInt("Masukan status pinjam (0 tersedia 1 dipinjam)  : ");
 
     listBuku[banyakBuku] = bukuBaru;
 
@@ -81,8 +81,8 @@ void rubahBuku() {
     DATA_BUKU bukuBaru;
     strcpy(bukuBaru.id, inputStringMax("Masukan ID buku    : ", MAX_ID));
     strcpy(bukuBaru.namaBuku, inputStringMax("Masukan nama buku  : ", MAX_NAMA));
-    bukuBaru.hargaSewa = inputInt("Masukan harga sewa : ");
-    bukuBaru.statusSewa = inputInt("Masukan status sewa (0 tersedia 1 dipinjam)  : ");
+    bukuBaru.hargaPinjam = inputInt("Masukan harga pinjam : ");
+    bukuBaru.statusPinjam = inputInt("Masukan status pinjam (0 tersedia 1 dipinjam)  : ");
 
     listBuku[bukuDipilih] = bukuBaru;
 
@@ -184,8 +184,8 @@ void manageBuku() {
 void initBuku() {
     strcpy(listBuku[banyakBuku].id, "BK-01");
     strcpy(listBuku[banyakBuku].namaBuku, "Belajar Pemrograman JAVA");
-    listBuku[banyakBuku].hargaSewa = 30000;
-    listBuku[banyakBuku].statusSewa = 0;
+    listBuku[banyakBuku].hargaPinjam = 30000;
+    listBuku[banyakBuku].statusPinjam = 0;
     banyakBuku++;
 }
 

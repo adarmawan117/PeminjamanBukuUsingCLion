@@ -18,15 +18,25 @@
 typedef struct {
     char id[MAX_ID];
     char namaBuku[MAX_NAMA];
-    int hargaSewa;
+    int hargaPinjam;
     /**
      * 0 untuk avail, 1 untuk dipinjam
     */
-    int statusSewa;
+    int statusPinjam;
 } DATA_BUKU;
 
 DATA_BUKU listBuku[MAX_STRUCT];
 int banyakBuku = 0;
 
 
+bool isEmptyBuku();
+char *getStatusPinjam(int status);
+void tampilBuku();
+void tampilListBuku();
+void tambahBuku();
+void rubahBuku();
+void hapusBuku();
+void manageBuku();
+void initBuku();
+int getIdxBuku(char idBuku[]);
 #endif //PEMINJAMANBUKUUSINGCLION_VIEWBUKU_H

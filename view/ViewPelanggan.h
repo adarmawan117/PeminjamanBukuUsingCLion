@@ -34,4 +34,13 @@ int banyakPelanggan = 0;
 char username[MAX_STRING_LOGIN];
 char password[MAX_STRING_LOGIN];
 
+bool isEmptyPelanggan();
+char *getStatusPelanggan(int status);
+void tampilPelanggan();
+void tampilListPelanggan();
+void tambahPelanggan();
+void initPelanggan();
+bool authLogin();
+char *getNamaPengguna();
+void registrasi();
 #endif //PEMINJAMANBUKUUSINGCLION_VIEWPELANGGAN_H

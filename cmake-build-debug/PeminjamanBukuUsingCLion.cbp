@@ -90,6 +90,9 @@
 		<Unit filename="H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/validasi.h">
 			<Option target="PeminjamanBukuUsingCLion"/>
 		</Unit>
+		<Unit filename="H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewAdmin.h">
+			<Option target="PeminjamanBukuUsingCLion"/>
+		</Unit>
 		<Unit filename="H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewBuku.h">
 			<Option target="PeminjamanBukuUsingCLion"/>
 		</Unit>

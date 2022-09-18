@@ -5,6 +5,8 @@ CMakeFiles/PeminjamanBukuUsingCLion.dir/main.c.obj: \
  ../main.c \
  ../method/conio.h \
  ../validasi.h \
+ ../view/ViewAdmin.c \
+ ../view/ViewAdmin.h \
  ../view/ViewBuku.c \
  ../view/ViewBuku.h \
  ../view/ViewPelanggan.c \

@@ -17,7 +17,7 @@ int getLatestIDPeminjaman() {
 /**
  * Menu untuk meminjam buku.
  */
-void pinjamBuku() {
+void pinjamBuku(char username[]) {
 
     clrscr();
     printf("\n\n\n");
@@ -86,7 +86,7 @@ void pinjamBuku() {
  * Untuk mendapatkan jumlah buku yang dipinjam
  * @return Mengambalikan jumlah buku yang dipinjam
  */
-int getJumlahBukuDipinjam() {
+int getJumlahBukuDipinjam(char username[]) {
     int i;
     int jumlahBukuDipinjam = 0;
     for(i = 0; i < banyakPeminjaman; i++) {

@@ -13,6 +13,8 @@ view/ViewPelanggan.c
 H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewPelanggan.c
 view/ViewPeminjaman.c
 H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewPeminjaman.c
+view/ViewAdmin.c
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewAdmin.c
 
 H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/method/conio.h
 stdio.h
@@ -29,6 +31,12 @@ string.h
 -
 ctype.h
 -
+
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewAdmin.c
+ViewAdmin.h
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewAdmin.h
+
+H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewAdmin.h
 
 H:/Youtube/BahasaC/PeminjamanBukuUsingCLion/view/ViewBuku.c
 ViewBuku.h

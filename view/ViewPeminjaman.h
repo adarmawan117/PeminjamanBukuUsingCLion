@@ -6,9 +6,6 @@
 #define PEMINJAMANBUKUUSINGCLION_VIEWPEMINJAMAN_H
 
 typedef struct {
-    /**
-     * auto increment
-     */
     int idPeminjaman;
     char idBuku[MAX_ID];
     char idPelanggan[MAX_ID];

@@ -1,99 +1,94 @@
-// versi 6
 /**
- - Buat validasi agar input int bisa sesuai
-     Caranya dengan memasukan nilai kedalam string dahulu, kemudian lakukan pengecekan tiap karakternya
-     Kalau terdapat bukan int, keluarkan error dan minta input lagi
-     <Lihat playlist ke 12>
+ <h1>Versi 7</h1>
+ - Implementasi penyimpanan data kedalam database MySQL / SQLite <br>
  */
 
-// Versi 5
 /**
- - Buat fungsi gotxy, untuk mempercantik tampilan
+ <h1>Versi 6</h1>
+ - Buat validasi agar input int bisa sesuai<br>
+     Caranya dengan memasukan nilai kedalam string dahulu, kemudian lakukan pengecekan tiap karakternya<br>
+     Kalau terdapat bukan int, keluarkan error dan minta input lagi<br>
+     <Lihat playlist ke 12><br>
+ */
+
+/**
+ <h1>Versi 5</h1>
+ - Buat fungsi gotxy, untuk mempercantik tampilan<br>
  */
 
 
-// versi 4.1
 /**
- * 28 Maret 2022
- - Untuk menambah pelanggan, harus admin
- - Buatkan login sebagai admin atau sebagai pelanggan
+ <h1>Versi 4.1</h1>
+ <h2>28 Maret 2022</h2>
+ - <s>Untuk menambah pelanggan, harus admin</s><br>
+ - Buatkan login sebagai admin atau sebagai pelanggan<br><br><br>
+
+ * 18 September 2022 *<br>
+ * Video playlist ke 26 *<br>
+ - Implementasi project menjadi linked list<br>
+    Agar bisa meminimalisir penggunaan variabel global<br>
  */
 
-// Versi 4
 /**
- * 14-Oktober-2021
-===========
- - Buat fungsi untuk register.........................................s= DONE
- - Validasi input register dan login..................................= DONE
+ <h1>Versi 4</h1>
+ <h2>14 Oktober 2021</h2>
+ - <s>Buat fungsi untuk register</s><br>
+ - <s>Validasi input register dan login</s><br><br><br>
 
- *** 28 Maret 2022
- - Kalau login sebagai user biasa, maka hanya boleh melihat list buku.= DONE
+ <h2>28 Maret 2022</h2>
+ - <s>Kalau login sebagai user biasa, maka hanya boleh melihat list buku</s><br><br><br>
 
- *** 14 September 2022
- - Buat fungsi untuk menambah buku....................................= DONE
- - Buat fungsi untuk merubah buku.....................................= DONE
- - Buat fungsi untuk menghapus buku...................................= DONE
+ <h2>14 September 2022</h2>
+ - <s>Buat fungsi untuk menambah buku</s><br>
+ - <s>Buat fungsi untuk merubah buku</s><br>
+ - <s>Buat fungsi untuk menghapus buku</s><br><br><br>
 
- - Buat fungsi untuk menghapus pelanggan
- - Buat fungsi untuk merubah pelanggan
+ - Buat fungsi untuk menghapus pelanggan<br>
+ - Buat fungsi untuk merubah pelanggan<br><br>
 
- - Simpan data buku kedalam file
- - Simpan data pelanggan kedalam file
- - Simpan data peminjaman kedalam file
+ - Simpan data buku kedalam file<br>
+ - Simpan data pelanggan kedalam file<br>
+ - Simpan data peminjaman kedalam file<br><br><br>
 
- *** 15 September 2022
- - Modularisasi file (pisahkan fungsi tertentu kedalam file terpisah)...= DONE
- - Penyesuaian nama didalam program (tidak ada lagi peminjaman, penyewaan, dkk dll)....= DONE
+ <h2>15 September 2022</h2>
+ - <s>Modularisasi file</s><br>
+ - <s>Penyesuaian nama didalam program</s><br><br>
+
+ - <s>Mempercantik dokumentasi</s><br>
+*/
+
+
+/**
+ <h1>Versi 3</h1>
+ <h2>28 September 2021</h2>
+Mulai pindah ke Clion<br>
+===========<br>
+- <s>Koneksikan peminjaman dengan pelanggan</s><br>
+- <s>Refactor penamaan</s><br>
 
 */
 
-// Versi 3
 /**
-===========
-28 - September - 2021
-Mulai pindah ke Clion
-===========
-- Koneksikan peminjaman dengan pelanggan   = DONE
-- Refactor penamaan                        = DONE
+ <h1>Versi 2</h1>
+ <h2>27 September 2021</h2>
+===========<br>
+- <s>Tambah pelanggan</s><br>
+- <s>Lihat list peminjam</s><br>
+- <s>Mengembalikan buku</s><br>
+- <s>Logout</s><br>
+- <s>Update login agar bisa membatalkan login (exit program)</s><br>
 
 */
 
-// Versi 2
+
+
 /**
-===========
-27-September-2021
-===========
-- Tambah pelanggan        = DONE
-- Lihat list peminjam     = DONE
-- Mengembalikan buku      = DONE
-- Logout                  = DONE
-- Update login agar bisa membatalkan login (exit program) = DONE
-
-
-DATA Pelanggan
--------------
-id
-nama
-statusPelanggan => 0 untuk bukan anggota, dan 1 untuk anggota
-*/
-
-// Versi 1
-/**
-===========
-26-September-2021
-===========
-Peminjaman BUKU
-- Login              = DONE
-- Tampil list buku   = DONE
-- Pinjam Buku        = DONE
-
-DATA BUKU
-----------
-id
-nama
-pengarang
-hargaPinjam perhari
-statusPinjam
+ <h1>Versi 1</h1>
+ <h2>26 September 2021</h2>
+===========<br>
+- <s>Login</s><br>
+- <s>Tampil list buku</s><br>
+- <s>Pinjam Buku</s><br>
 
 */
 
@@ -102,6 +97,10 @@ statusPinjam
 #include "view/ViewBuku.c"
 #include "view/ViewPelanggan.c"
 #include "view/ViewPeminjaman.c"
+#include "view/ViewAdmin.c"
+
+char username[MAX_STRING_LOGIN];
+char password[MAX_STRING_LOGIN];
 
 char * getNamaBuku(char idBuku[]) {
     int i;
@@ -135,7 +134,7 @@ void kembalikanBuku() {
     }
 
 
-    int jumlahBukuDipinjam = getJumlahBukuDipinjam();
+    int jumlahBukuDipinjam = getJumlahBukuDipinjam(username);
     if(jumlahBukuDipinjam == 0) {
         printf("                               ||                                      ||\n");
         printf("                               ||     Tidak ada buku yang dipinjam!    ||\n");
@@ -329,6 +328,9 @@ void login() {
             menuUtamaGuestAccount();
         } else if (strcmp(username, "0") == 0 && strcmp(password, "0") == 0) {
             exit(0);
+            // auth admin
+        } else if(authAdmin()) {
+        // atuh pelanggan
         } else if (authLogin()) {
             printf("Selamat Datang %s\n", getNamaPengguna());
 

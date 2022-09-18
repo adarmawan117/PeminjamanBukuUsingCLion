@@ -4,27 +4,41 @@
 
 #include "ViewPelanggan.h"
 
-/**
-Untuk mengecek apakah list pelanggan masih kosong
-*/
-bool isEmptyPelanggan() {
-    return banyakPelanggan == 0;
+int sizePelanggan(DATA_PELANGGAN listPelanggan[]) {
+    int idx = 0;
+    while(strcmp(listPelanggan[idx].username, "") != 0) {
+        idx++;
+    }
+
+    return idx;
 }
 
-/**
- * Fungsi untuk mencari status seorang pelanggan apakah Anggota atau Bukan Anggota
- * @param status Status Anggota dari seorang pelanggan (0 atau 1)
- * @return Anggota jika statusnya 1<br>Bukan anggota jika statusnya 0
- */
+bool isEmptyPelanggan(DATA_PELANGGAN listPelanggan[]) {
+    return sizePelanggan(listPelanggan) == 0;
+}
+
+bool authPelanggan(DATA_PELANGGAN listPelanggan[], char username[], char password[]) {
+    bool status = false;
+    int banyakPelanggan = sizePelanggan(listPelanggan);
+    int i;
+    for(i = 0; i < banyakPelanggan; i++) {
+        if((strcmp(listPelanggan[i].username, username) == 0) && (strcmp(listPelanggan[i].password, password) == 0)) {
+            status = true;
+            break;
+        }
+    }
+
+    return status;
+}
+
 char *getStatusPelanggan(int status) {
     return status == 1 ? "Anggota" : "Bukan Anggota";
 }
 
-/**
- * Untuk menampilkan semua list pelanggan (tanpa keterangan header)
- */
-void tampilPelanggan() {
+void tampilPelanggan(DATA_PELANGGAN listPelanggan[]) {
     int i;
+    int banyakPelanggan = sizePelanggan(listPelanggan);
+
     printf("==========================================================================================\n");
     printf("||%-5s||%-10s||%-40s||%-25s||\n", "No", "ID", "Nama", "Status Anggota");
     printf("==========================================================================================\n");
@@ -35,10 +49,7 @@ void tampilPelanggan() {
     printf("==========================================================================================\n");
 }
 
-/**
- * Untuk menampilkan semua list pelanggan (dengan keterangan header)
- */
-void tampilListPelanggan() {
+void tampilListPelanggan(DATA_PELANGGAN listPelanggan[]) {
 
     clrscr();
     printf("\n\n\n");
@@ -46,7 +57,7 @@ void tampilListPelanggan() {
     printf("                        || HALAMAN TAMPIL SEMUA LIST PELANGGAN  ||\n");
     printf("                        ||======================================||\n");
 
-    if(isEmptyPelanggan()) {
+    if(isEmptyPelanggan(listPelanggan)) {
         printf("                        ||                                      ||\n");
         printf("                        ||       Pelanggan masih kosong!        ||\n");
         printf("                        ||                                      ||\n");
@@ -55,14 +66,13 @@ void tampilListPelanggan() {
     }
 
     printf("\n");
-    tampilPelanggan();
+    tampilPelanggan(listPelanggan);
 }
 
-/**
- * Untuk menambah pelanggan baru kedalam list
- */
-void tambahPelanggan() {
+void tambahPelanggan(DATA_PELANGGAN listPelanggan[]) {
     int panjangID;
+    int banyakPelanggan = sizePelanggan(listPelanggan);
+
     do {
 
         clrscr();
@@ -116,10 +126,8 @@ void tambahPelanggan() {
     } while(confirm != 'Y' && confirm != 'T');
 }
 
-/**
- * Inisialisasi awal (terhadap list pelanggan) ketika program pertama kali dijalankan
- */
-void initPelanggan() {
+void initPelanggan(DATA_PELANGGAN listPelanggan[]) {
+    int banyakPelanggan = 0;
     strcpy(listPelanggan[banyakPelanggan].id, "PMJ-01");
     strcpy(listPelanggan[banyakPelanggan].username, "hendra");
     strcpy(listPelanggan[banyakPelanggan].password, "hendra");
@@ -128,29 +136,11 @@ void initPelanggan() {
     banyakPelanggan++;
 }
 
-/**
- * Untuk mengecek apakah username dan password sesuai
- * @param username username login
- * @param password password login
- * @return true jika username ada di dalam database<br>false jika tidak ada
- */
-bool authLogin() {
-    bool status = false;
-    int i;
-    for(i = 0; i < banyakPelanggan; i++) {
-        if((strcmp(listPelanggan[i].username, username) == 0) && (strcmp(listPelanggan[i].password, password) == 0)) {
-            status = true;
-            break;
-        }
-    }
-
-    return status;
-}
-
-char *getNamaPengguna() {
+char *getNamaPengguna(DATA_PELANGGAN listPelanggan[], char username[]) {
     char *nama;
     nama = malloc(sizeof(char) * MAX_NAMA);
 
+    int banyakPelanggan = sizePelanggan(listPelanggan);
     int i;
     for(i = 0; i < banyakPelanggan; i++) {
         if(strcmp(listPelanggan[i].username, username) == 0) {
@@ -162,7 +152,8 @@ char *getNamaPengguna() {
     return nama;
 }
 
-void registrasi() {
+void registrasi(DATA_PELANGGAN listPelanggan[]) {
+    int banyakPelanggan = sizePelanggan(listPelanggan);
     strcpy(listPelanggan[banyakPelanggan].id,
            inputStringMax("Masukan ID       : ", MAX_ID));
 
